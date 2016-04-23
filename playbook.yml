@@ -1,0 +1,14 @@
+---
+- name: Stand up logserver.
+  hosts: logserver
+  roles:
+    - role: freedomofpress.elk
+      become: yes
+
+    - role: freedomofpress.riemann
+      become: yes
+
+- name: Configure logclients.
+  hosts: logclients
+  roles:
+    - role: freedomofpress.logstash-client
