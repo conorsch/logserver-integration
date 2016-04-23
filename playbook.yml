@@ -12,3 +12,4 @@
   hosts: logclients
   roles:
     - role: freedomofpress.logstash-client
+      logstash_client_ssl_certificate: files/logstash-client.crt
