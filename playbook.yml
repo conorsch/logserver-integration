@@ -1,8 +1,16 @@
 ---
+# Must gather host facts for all hosts so ifaces are defined.
+- name: Gather facts.
+  hosts: all
+  tasks:
+    - setup:
+
 - name: Stand up logserver.
   hosts: logserver
   roles:
     - role: freedomofpress.elk
+      elk_network_interface: eth1
+      ssl_certificate_ip_address: "{{ ansible_eth1.ipv4.address }}"
       become: yes
 
     - role: freedomofpress.riemann
@@ -13,3 +21,6 @@
   roles:
     - role: freedomofpress.logstash-client
       logstash_client_ssl_certificate: files/logstash-client.crt
+      # For vagrant, must set eth1 as default interface.
+      logstash_client_logserver_ip_address: "{{ hostvars[groups.logserver.0].ansible_eth1.ipv4.address }}"
+  tags: clients
