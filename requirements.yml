@@ -1,0 +1,5 @@
+---
+- src: freedomofpress.elk
+- src: freedomofpress.generate-ssl-cert
+- src: freedomofpress.logstash-client
+- src: freedomofpress.riemann
