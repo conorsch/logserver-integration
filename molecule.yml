@@ -25,12 +25,17 @@ vagrant:
         - network_name: private_network
           type: dhcp
           auto_config: true
+      ansible_groups:
+        - logserver
+        - riemann
 
     - name: webserver
       interfaces:
         - network_name: private_network
           type: dhcp
           auto_config: true
+      ansible_groups:
+        - logclients
 
 ansible:
   playbook: playbook.yml
