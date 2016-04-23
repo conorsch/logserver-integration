@@ -1,3 +1,4 @@
 .molecule/
 .vagrant/
 roles/
+files/logstash-client.crt
