@@ -1,0 +1,37 @@
+---
+vagrant:
+  platforms:
+    - name: jessie64
+      box: debian/jessie64
+
+    - name: trusty64
+      box: ubuntu/trusty64
+
+    - name: wily64
+      box: ubuntu/wily64
+
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        # Extra RAM mostly for logserver. Molecule doesn't support
+        # per-host memory overrides, although a custom Vagrantfile template
+        # would do the trick.
+        memory: 1024
+
+  instances:
+    - name: logserver
+      interfaces:
+        - network_name: private_network
+          type: dhcp
+          auto_config: true
+
+    - name: webserver
+      interfaces:
+        - network_name: private_network
+          type: dhcp
+          auto_config: true
+
+ansible:
+  playbook: playbook.yml
+  sudo: no
