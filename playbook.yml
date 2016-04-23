@@ -12,9 +12,11 @@
       elk_network_interface: eth1
       ssl_certificate_ip_address: "{{ ansible_eth1.ipv4.address }}"
       become: yes
+      tags: elk
 
     - role: freedomofpress.riemann
       become: yes
+      tags: riemann
 
 - name: Configure logclients.
   hosts: logclients
@@ -23,4 +25,4 @@
       logstash_client_ssl_certificate: files/logstash-client.crt
       # For vagrant, must set eth1 as default interface.
       logstash_client_logserver_ip_address: "{{ hostvars[groups.logserver.0].ansible_eth1.ipv4.address }}"
-  tags: clients
+      tags: clients
