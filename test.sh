@@ -6,4 +6,4 @@ echo "Installing latest roles..."
 ansible-galaxy install --force -r requirements.yml
 
 echo "Running molecule tests..."
-molecule test
+molecule test --destroy never

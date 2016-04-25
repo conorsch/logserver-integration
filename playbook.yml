@@ -8,7 +8,7 @@
 - name: Stand up logserver.
   hosts: logserver
   roles:
-    - role: ~/gits/freedomofpress/ansible-role-elk
+    - role: freedomofpress.elk
       elk_network_interface: eth1
       ssl_certificate_ip_address: "{{ ansible_eth1.ipv4.address }}"
       become: yes

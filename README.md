@@ -12,7 +12,7 @@ of FPF-maintained Ansible roles:
 
 The project uses [Molecule] and [ServerSpec] for testing. You'll also need
 to download the role dependencies via ansible-galaxy. If you're testing
-feature branches, make sure to update the `version:` string in the `requirements.yml`,
+feature branches, make sure to update the `version:` string in `requirements.yml`,
 to pull from the correct target. Then:
 
 ```
@@ -28,8 +28,13 @@ You can also run selective commands:
 molecule idempotence
 molecule verify
 ```
-
 See the [Molecule] docs for more info.
+There's a wrapper script that handles most of these actions so you can run a full
+integration test:
+
+```
+./test.sh
+```
 
 
 ## License
