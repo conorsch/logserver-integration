@@ -8,6 +8,11 @@ of FPF-maintained Ansible roles:
 * [freedomofpress.logstash-client]
 * [freedomofpress.generate-ssl-cert]
 
+The scripts contained herein will create VirtualBox VMs for the logserver
+and a logclient, provision them, then run separate ServerSpec test suites
+against each host. In the near future there will be actual integration tests
+that confirm logs are flowing between the two hosts.
+
 ## Running the tests
 
 The project uses [Molecule] and [ServerSpec] for testing. You'll also need
