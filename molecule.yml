@@ -23,7 +23,8 @@ vagrant:
     - name: logserver
       interfaces:
         - network_name: private_network
-          type: dhcp
+          type: static
+          ip: "192.168.10.2"
           auto_config: true
       raw_config_args:
         - "vm.network 'forwarded_port', guest: 443, host: 4443"
@@ -35,7 +36,8 @@ vagrant:
     - name: webserver
       interfaces:
         - network_name: private_network
-          type: dhcp
+          type: static
+          ip: "192.168.10.3"
           auto_config: true
       ansible_groups:
         - logclients
