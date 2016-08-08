@@ -32,6 +32,8 @@ vagrant:
       ansible_groups:
         - logserver
         - riemann
+      raw_config_args:
+        - "vm.synced_folder './', '/vagrant', disabled: true"
 
     - name: webserver
       interfaces:
@@ -41,6 +43,8 @@ vagrant:
           auto_config: true
       ansible_groups:
         - logclients
+      raw_config_args:
+        - "vm.synced_folder './', '/vagrant', disabled: true"
 
 ansible:
   playbook: playbook.yml
