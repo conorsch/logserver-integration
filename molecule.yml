@@ -13,11 +13,6 @@ vagrant:
   providers:
     - name: virtualbox
       type: virtualbox
-      options:
-        # Extra RAM mostly for logserver. Molecule doesn't support
-        # per-host memory overrides, although a custom Vagrantfile template
-        # would do the trick.
-        memory: 1024
 
   instances:
     - name: logserver
@@ -26,14 +21,19 @@ vagrant:
           type: static
           ip: "192.168.10.2"
           auto_config: true
-      raw_config_args:
-        - "vm.network 'forwarded_port', guest: 443, host: 4443"
-        - "vm.network 'forwarded_port', guest: 80, host: 8080"
       ansible_groups:
         - logserver
         - riemann
       raw_config_args:
+        - "vm.network 'forwarded_port', guest: 443, host: 4443"
+        - "vm.network 'forwarded_port', guest: 80, host: 8080"
         - "vm.synced_folder './', '/vagrant', disabled: true"
+        # Use block-style notation to increase RAM only for logserver.
+        - |-
+          vm.provider 'virtualbox' do |vb|
+            vb.memory = 2048
+            vb.cpus = 2
+          end
 
     - name: webserver
       interfaces:
