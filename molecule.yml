@@ -48,4 +48,5 @@ vagrant:
 
 ansible:
   playbook: playbook.yml
+  config_file: ansible.cfg
   sudo: no
