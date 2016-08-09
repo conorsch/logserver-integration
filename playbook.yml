@@ -5,12 +5,34 @@
   tasks:
     - setup:
 
+# This is a hack to get around the bizarre variable precedence for dependency roles.
+# Since the ssl-generate-certificate role is a dependency of elk, play-level vars
+# are ignored in the context of the ssl dependency role. Storing the vars in the elk
+# role's vars directory resolves, but it's a messy solution.
+- name: Configure var overrides for testing.
+  hosts: logserver
+  gather_facts: no
+  vars:
+    logserver_integration_tests_var_overrides:
+      elk_configure_firewall: no
+      ssl_certificate_ip_address: "{{ hostvars.logserver.ansible_eth1.ipv4.address }}"
+  tasks:
+    - name: Creates temporary vars dir in local elk role.
+      local_action:
+        module: file
+        state: directory
+        path: ./roles/freedomofpress.elk/vars
+
+    - name: Write temporary vars file to local elk role.
+      local_action:
+        module: copy
+        content: "{{ logserver_integration_tests_var_overrides|to_nice_yaml }}"
+        dest: ./roles/freedomofpress.elk/vars/main.yml
+
 - name: Stand up logserver.
   hosts: logserver
   roles:
     - role: freedomofpress.elk
-      elk_network_interface: eth1
-      ssl_certificate_ip_address: "{{ ansible_eth1.ipv4.address }}"
       become: yes
       tags: elk
 
